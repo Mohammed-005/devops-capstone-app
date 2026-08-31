@@ -32,6 +32,7 @@ The project uses a pull-based GitOps model to manage deployments:
 
 ## Repository Structure
 
+```text
 ├── .github/workflows/ci.yaml # CI pipeline definition
 ├── k8s/                      # Kubernetes manifests
 │   ├── app-deploy.yaml       # Deployment configuration (2 replicas)
@@ -40,6 +41,7 @@ The project uses a pull-based GitOps model to manage deployments:
 ├── argocd-app.yaml           # ArgoCD Application manifest
 ├── app.py                    # Flask microservice
 └── requirements.txt          # App dependencies
+```
 
 ## Technical Notes
 
