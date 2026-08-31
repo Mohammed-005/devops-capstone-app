@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: backend-container
-          image: devops-capstone-app:v3
-          imagePullPolicy: Never
+          image: 337405469571.dkr.ecr.ap-southeast-2.amazonaws.com/devops-capstone-app:b8f89b0e29c8afc9ae5642bc8663323c65d02540
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           livenessProbe:
