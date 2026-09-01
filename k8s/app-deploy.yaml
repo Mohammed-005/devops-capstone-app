@@ -13,7 +13,7 @@ spec:
         app: backend
     spec:
       imagePullSecrets:
-        - name: aws-ecr-secret
+        - name: ecr-registry-secret
       containers:
         - name: backend-container
           image: 337405469571.dkr.ecr.ap-southeast-2.amazonaws.com/devops-capstone-app:b8f89b0e29c8afc9ae5642bc8663323c65d02540
