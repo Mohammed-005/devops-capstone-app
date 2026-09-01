@@ -1,0 +1,28 @@
+replicaCount: 2
+
+image:
+  repository: 337405469571.dkr.ecr.ap-southeast-2.amazonaws.com/devops-capstone-app
+  tag: b8f89b0e29c8afc9ae5642bc8663323c65d02540
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: aws-ecr-secret
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
