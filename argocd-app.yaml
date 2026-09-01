@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/Mohammed-005/devops-capstone-app.git'
     targetRevision: HEAD
-    path: k8s
+    path: helm/capstone-chart
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
