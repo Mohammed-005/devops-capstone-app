@@ -1,14 +1,14 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "capstone-chart.fullname" . }}
+  name: {{ .Release.Name }}-servicemonitor
   labels:
-    {{- include "capstone-chart.labels" . | nindent 4 }}
+    app: {{ .Release.Name }}-backend
     release: kube-prom-stack
 spec:
   selector:
     matchLabels:
-      {{- include "capstone-chart.selectorLabels" . | nindent 6 }}
+      app: {{ .Release.Name }}-backend
   endpoints:
     - port: http
       path: /metrics
