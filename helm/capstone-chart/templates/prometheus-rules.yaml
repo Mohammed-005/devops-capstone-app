@@ -20,8 +20,8 @@ spec:
           labels:
             severity: warning
           annotations:
-            summary: "High CPU usage on {{ '{{ $labels.pod }}' }}"
-            description: "Pod {{ '{{ $labels.pod }}' }} has used over 80% of its CPU limit for 5 minutes."
+            summary: "High CPU usage on {{ "{{" }} $labels.pod {{ "}}" }}"
+            description: "Pod {{ "{{" }} $labels.pod {{ "}}" }} has used over 80% of its CPU limit for 5 minutes."
         - alert: PodCrashLooping
           expr: |
             increase(kube_pod_container_status_restarts_total{namespace="default", pod=~"capstone-backend-backend.*"}[15m]) > 3
@@ -29,5 +29,5 @@ spec:
           labels:
             severity: critical
           annotations:
-            summary: "Pod {{ '{{ $labels.pod }}' }} is crash-looping"
-            description: "Pod {{ '{{ $labels.pod }}' }} restarted more than 3 times in 15 minutes."
+            summary: "Pod {{ "{{" }} $labels.pod {{ "}}" }} is crash-looping"
+            description: "Pod {{ "{{" }} $labels.pod {{ "}}" }} restarted more than 3 times in 15 minutes."
