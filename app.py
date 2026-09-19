@@ -1,15 +1,17 @@
 from flask import Flask, jsonify
+from prometheus_flask_exporter import PrometheusMetrics
 
 PORT = 8080
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app) # Automatically exposes /metrics and tracks latency/errors
 
 @app.route('/')
 def home():
     return jsonify ({
         "message" : "Devops Capstone V1 Active"
     })
-    
+
 @app.route('/health')
 def health():
     return jsonify ({
