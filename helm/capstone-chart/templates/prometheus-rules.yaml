@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: capstone-backend-alerts
+  namespace: default
+  labels:
+    release: kube-prom-stack
+spec:
+  groups:
+    - name: capstone-backend.rules
+      rules:
+        - alert: HighCPUUsage
+          expr: |
+            (sum(rate(container_cpu_usage_seconds_total{namespace="default", pod=~"capstone-backend-backend.*"}[5m]))
+            by (pod)
+            /
+            sum(kube_pod_container_resource_limits{namespace="default", pod=~"capstone-backend-backend.*", resource="cpu"})
+            by (pod)) > 0.8
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High CPU usage on {{ $labels.pod }}"
+            description: "Pod {{ $labels.pod }} has used over 80% of its CPU limit for 5 minutes."
+        - alert: PodCrashLooping
+          expr: |
+            increase(kube_pod_container_status_restarts_total{namespace="default", pod=~"capstone-backend-backend.*"}[15m]) > 3
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Pod {{ $labels.pod }} is crash-looping"
+            description: "Pod {{ $labels.pod }} restarted more than 3 times in 15 minutes."
