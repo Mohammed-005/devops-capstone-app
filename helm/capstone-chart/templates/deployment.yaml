@@ -40,3 +40,4 @@ spec:
               port: {{ .Values.service.targetPort }}
             initialDelaySeconds: 0
             periodSeconds: 10
+
