@@ -4,7 +4,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 PORT = 8080
 
 app = Flask(__name__)
-metrics = PrometheusMetrics(app) # Automatically exposes /metrics and tracks latency/errors
+metrics = PrometheusMetrics(app)
 
 @app.route('/')
 def home():
@@ -19,4 +19,4 @@ def health():
     }), 200
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=PORT)
+    app.run(host='0.0.0.0', port=PORT) 

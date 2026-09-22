@@ -7,6 +7,8 @@ on:
 jobs:
     build-and-scan:
         runs-on: ubuntu-latest
+        permissions: 
+            contents: write
 
         steps: 
         -   name: Checkout the Code
@@ -44,3 +46,12 @@ jobs:
             run: |
                 docker tag devops-capstone-app:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
                 docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG 
+
+        -   name: Update Image Tag in Helm values.yaml
+            run: |
+                sed -i "5s/tag: .*/tag: \"${{ github.sha }}\"/" helm/capstone-chart/values.yaml
+                git config user.name "github-actions[bot]"
+                git config user.email "github-actions[bot]@users.noreply.github.com"
+                git add helm/capstone-chart/values.yaml
+                git commit -m "Update image tag to ${{ github.sha }} [skip ci]"
+                git push origin main
