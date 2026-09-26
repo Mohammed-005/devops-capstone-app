@@ -27,3 +27,24 @@ autoscaling:
   maxReplicas: 10
   targetCPUUtilizationPercentage: 50
 
+alertmanager:
+  config:
+    global:
+      slack_api_url: 'https://hooks.slack.com/services/WEBHOOK/URL'
+    route:
+      group_by: ['alertname', 'namespace']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 1h
+      receiver: 'slack-notifications'
+    receivers:
+    - name: 'slack-notifications'
+      slack_configs:
+      - channel: '#alerts'
+        send_resolved: true
+        title: '[{{ .Status | toUpper }}] {{ .GroupLabels.alertname }}'
+        text: >-
+          {{ range .Alerts }}
+            *Description:* {{ .Annotations.description }}
+            *Severity:* {{ .Labels.severity }}
+          {{ end }}
