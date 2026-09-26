@@ -8,15 +8,22 @@ data:
         "name": "ad6m5gc",
         "namespace": "default",
         "uid": "d04bd45e-7ea2-4370-a6c6-dced64735f47",
-        "resourceVersion": "1790390246591006",
-        "generation": 1,
+        "resourceVersion": "1790391941237980",
+        "generation": 2,
         "creationTimestamp": "2026-09-26T02:37:26Z",
         "labels": {
           "grafana.app/deprecatedInternalID": "493174879940608"
         },
         "annotations": {
           "grafana.app/createdBy": "user:efzdi1lx6zuo0d",
-          "grafana.app/saved-from-ui": "Grafana v13.2.2 (1bea008f7e)"
+          "grafana.app/managedBy": "classic-file-provisioning",
+          "grafana.app/managerId": "sidecarProvider",
+          "grafana.app/sourceChecksum": "5720c799f3b11a287af66cf816bb23fc",
+          "grafana.app/sourcePath": "/tmp/dashboards/capstone-backend-health.json",
+          "grafana.app/sourceTimestamp": "1790391941000",
+          "grafana.app/updatedBy": "access-policy:service",
+          "grafana.app/updatedTimestamp": "2026-09-26T03:05:41Z",
+          "grafana.app/folder": ""
         }
       },
       "spec": {
@@ -24,20 +31,20 @@ data:
           {
             "kind": "AnnotationQuery",
             "spec": {
-              "query": {
-                "kind": "DataQuery",
-                "group": "grafana",
-                "version": "v0",
-                "datasource": {
-                  "name": "-- Grafana --"
-                },
-                "spec": {}
-              },
+              "builtIn": true,
               "enable": true,
               "hide": true,
               "iconColor": "rgba(0, 211, 255, 1)",
               "name": "Annotations & Alerts",
-              "builtIn": true
+              "query": {
+                "datasource": {
+                  "name": "-- Grafana --"
+                },
+                "group": "grafana",
+                "kind": "DataQuery",
+                "spec": {},
+                "version": "v0"
+              }
             }
           }
         ],
@@ -47,10 +54,6 @@ data:
           "panel-1": {
             "kind": "Panel",
             "spec": {
-              "id": 1,
-              "title": "Pod Restarts (15m window)",
-              "description": "",
-              "links": [],
               "data": {
                 "kind": "QueryGroup",
                 "spec": {
@@ -58,62 +61,39 @@ data:
                     {
                       "kind": "PanelQuery",
                       "spec": {
+                        "hidden": false,
                         "query": {
-                          "kind": "DataQuery",
-                          "group": "prometheus",
-                          "version": "v0",
                           "datasource": {
                             "name": "prometheus"
                           },
+                          "group": "prometheus",
+                          "kind": "DataQuery",
                           "spec": {
                             "editorMode": "code",
                             "expr": "rate(kube_pod_container_status_restarts_total{namespace=\"default\", pod=~\"capstone-backend-.*\"}[15m])",
                             "legendFormat": "{{pod}}",
                             "range": true
-                          }
+                          },
+                          "version": "v0"
                         },
-                        "refId": "A",
-                        "hidden": false
+                        "refId": "A"
                       }
                     }
                   ],
-                  "transformations": [],
-                  "queryOptions": {}
+                  "queryOptions": {},
+                  "transformations": []
                 }
               },
+              "description": "",
+              "id": 1,
+              "links": [],
+              "title": "Pod Restarts (15m window)",
               "vizConfig": {
-                "kind": "VizConfig",
                 "group": "timeseries",
-                "version": "13.2.2",
+                "kind": "VizConfig",
                 "spec": {
-                  "options": {
-                    "legend": {
-                      "calcs": [],
-                      "displayMode": "list",
-                      "placement": "bottom",
-                      "showLegend": true
-                    },
-                    "tooltip": {
-                      "hideZeros": false,
-                      "mode": "single",
-                      "sort": "none"
-                    }
-                  },
                   "fieldConfig": {
                     "defaults": {
-                      "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                          {
-                            "value": 0,
-                            "color": "green"
-                          },
-                          {
-                            "value": 80,
-                            "color": "red"
-                          }
-                        ]
-                      },
                       "color": {
                         "mode": "palette-classic"
                       },
@@ -150,21 +130,44 @@ data:
                         "thresholdsStyle": {
                           "mode": "off"
                         }
+                      },
+                      "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                          {
+                            "color": "green",
+                            "value": 0
+                          },
+                          {
+                            "color": "red",
+                            "value": 80
+                          }
+                        ]
                       }
                     },
                     "overrides": []
+                  },
+                  "options": {
+                    "legend": {
+                      "calcs": [],
+                      "displayMode": "list",
+                      "placement": "bottom",
+                      "showLegend": true
+                    },
+                    "tooltip": {
+                      "hideZeros": false,
+                      "mode": "single",
+                      "sort": "none"
+                    }
                   }
-                }
+                },
+                "version": "13.2.2"
               }
             }
           },
           "panel-2": {
             "kind": "Panel",
             "spec": {
-              "id": 2,
-              "title": "P95 Request Latency",
-              "description": "",
-              "links": [],
               "data": {
                 "kind": "QueryGroup",
                 "spec": {
@@ -172,63 +175,39 @@ data:
                     {
                       "kind": "PanelQuery",
                       "spec": {
+                        "hidden": false,
                         "query": {
-                          "kind": "DataQuery",
-                          "group": "prometheus",
-                          "version": "v0",
                           "datasource": {
                             "name": "prometheus"
                           },
+                          "group": "prometheus",
+                          "kind": "DataQuery",
                           "spec": {
                             "editorMode": "code",
                             "expr": "histogram_quantile(0.95, sum by(le) (rate(flask_http_request_duration_seconds_bucket{namespace=\"default\"}[5m])))",
                             "legendFormat": "{{p95 latency}}",
                             "range": true
-                          }
+                          },
+                          "version": "v0"
                         },
-                        "refId": "A",
-                        "hidden": false
+                        "refId": "A"
                       }
                     }
                   ],
-                  "transformations": [],
-                  "queryOptions": {}
+                  "queryOptions": {},
+                  "transformations": []
                 }
               },
+              "description": "",
+              "id": 2,
+              "links": [],
+              "title": "P95 Request Latency",
               "vizConfig": {
-                "kind": "VizConfig",
                 "group": "timeseries",
-                "version": "13.2.2",
+                "kind": "VizConfig",
                 "spec": {
-                  "options": {
-                    "legend": {
-                      "calcs": [],
-                      "displayMode": "list",
-                      "placement": "bottom",
-                      "showLegend": true
-                    },
-                    "tooltip": {
-                      "hideZeros": false,
-                      "mode": "single",
-                      "sort": "none"
-                    }
-                  },
                   "fieldConfig": {
                     "defaults": {
-                      "unit": "s",
-                      "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                          {
-                            "value": 0,
-                            "color": "green"
-                          },
-                          {
-                            "value": 80,
-                            "color": "red"
-                          }
-                        ]
-                      },
                       "color": {
                         "mode": "palette-classic"
                       },
@@ -265,78 +244,24 @@ data:
                         "thresholdsStyle": {
                           "mode": "off"
                         }
-                      }
+                      },
+                      "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                          {
+                            "color": "green",
+                            "value": 0
+                          },
+                          {
+                            "color": "red",
+                            "value": 80
+                          }
+                        ]
+                      },
+                      "unit": "s"
                     },
                     "overrides": []
-                  }
-                }
-              }
-            }
-          },
-          "panel-3": {
-            "kind": "Panel",
-            "spec": {
-              "id": 3,
-              "title": "Memory Usage vs Limits",
-              "description": "",
-              "links": [],
-              "data": {
-                "kind": "QueryGroup",
-                "spec": {
-                  "queries": [
-                    {
-                      "kind": "PanelQuery",
-                      "spec": {
-                        "query": {
-                          "kind": "DataQuery",
-                          "group": "prometheus",
-                          "version": "v0",
-                          "datasource": {
-                            "name": "prometheus"
-                          },
-                          "spec": {
-                            "editorMode": "code",
-                            "expr": "container_memory_working_set_bytes{namespace=\"default\", pod=~\"capstone-backend-backend.*\", container!=\"\"}",
-                            "legendFormat": "{{pod}} - Usage",
-                            "range": true
-                          }
-                        },
-                        "refId": "A",
-                        "hidden": false
-                      }
-                    },
-                    {
-                      "kind": "PanelQuery",
-                      "spec": {
-                        "query": {
-                          "kind": "DataQuery",
-                          "group": "prometheus",
-                          "version": "v0",
-                          "datasource": {
-                            "name": "prometheus"
-                          },
-                          "spec": {
-                            "editorMode": "code",
-                            "expr": "kube_pod_container_resource_limits{namespace=\"default\", pod=~\"capstone-backend-backend.*\", resource=\"memory\"}",
-                            "instant": false,
-                            "legendFormat": "{{pod}} - Limit",
-                            "range": true
-                          }
-                        },
-                        "refId": "B",
-                        "hidden": false
-                      }
-                    }
-                  ],
-                  "transformations": [],
-                  "queryOptions": {}
-                }
-              },
-              "vizConfig": {
-                "kind": "VizConfig",
-                "group": "timeseries",
-                "version": "13.2.2",
-                "spec": {
+                  },
                   "options": {
                     "legend": {
                       "calcs": [],
@@ -349,23 +274,77 @@ data:
                       "mode": "single",
                       "sort": "none"
                     }
-                  },
+                  }
+                },
+                "version": "13.2.2"
+              }
+            }
+          },
+          "panel-3": {
+            "kind": "Panel",
+            "spec": {
+              "data": {
+                "kind": "QueryGroup",
+                "spec": {
+                  "queries": [
+                    {
+                      "kind": "PanelQuery",
+                      "spec": {
+                        "hidden": false,
+                        "query": {
+                          "datasource": {
+                            "name": "prometheus"
+                          },
+                          "group": "prometheus",
+                          "kind": "DataQuery",
+                          "spec": {
+                            "editorMode": "code",
+                            "expr": "container_memory_working_set_bytes{namespace=\"default\", pod=~\"$pod\", container!=\"\"}",
+                            "legendFormat": "{{pod}} - Usage",
+                            "range": true
+                          },
+                          "version": "v0"
+                        },
+                        "refId": "A"
+                      }
+                    },
+                    {
+                      "kind": "PanelQuery",
+                      "spec": {
+                        "hidden": false,
+                        "query": {
+                          "datasource": {
+                            "name": "prometheus"
+                          },
+                          "group": "prometheus",
+                          "kind": "DataQuery",
+                          "spec": {
+                            "editorMode": "code",
+                            "expr": "kube_pod_container_resource_limits{namespace=\"default\", pod=~\"$pod\", resource=\"memory\"}",
+                            "instant": false,
+                            "legendFormat": "{{pod}} - Limit",
+                            "range": true
+                          },
+                          "version": "v0"
+                        },
+                        "refId": "B"
+                      }
+                    }
+                  ],
+                  "queryOptions": {},
+                  "transformations": []
+                }
+              },
+              "description": "",
+              "id": 3,
+              "links": [],
+              "title": "Memory Usage vs Limits",
+              "vizConfig": {
+                "group": "timeseries",
+                "kind": "VizConfig",
+                "spec": {
                   "fieldConfig": {
                     "defaults": {
-                      "unit": "bytes",
-                      "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                          {
-                            "value": 0,
-                            "color": "green"
-                          },
-                          {
-                            "value": 80,
-                            "color": "red"
-                          }
-                        ]
-                      },
                       "color": {
                         "mode": "palette-classic"
                       },
@@ -402,56 +381,24 @@ data:
                         "thresholdsStyle": {
                           "mode": "off"
                         }
-                      }
+                      },
+                      "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                          {
+                            "color": "green",
+                            "value": 0
+                          },
+                          {
+                            "color": "red",
+                            "value": 80
+                          }
+                        ]
+                      },
+                      "unit": "bytes"
                     },
                     "overrides": []
-                  }
-                }
-              }
-            }
-          },
-          "panel-4": {
-            "kind": "Panel",
-            "spec": {
-              "id": 4,
-              "title": "CPU Usage per Pod",
-              "description": "",
-              "links": [],
-              "data": {
-                "kind": "QueryGroup",
-                "spec": {
-                  "queries": [
-                    {
-                      "kind": "PanelQuery",
-                      "spec": {
-                        "query": {
-                          "kind": "DataQuery",
-                          "group": "prometheus",
-                          "version": "v0",
-                          "datasource": {
-                            "name": "prometheus"
-                          },
-                          "spec": {
-                            "editorMode": "code",
-                            "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"default\", pod=~\"capstone-backend-backend.*\", container!=\"\"}[5m])) by (pod)",
-                            "legendFormat": "{{pod}}",
-                            "range": true
-                          }
-                        },
-                        "refId": "A",
-                        "hidden": false
-                      }
-                    }
-                  ],
-                  "transformations": [],
-                  "queryOptions": {}
-                }
-              },
-              "vizConfig": {
-                "kind": "VizConfig",
-                "group": "timeseries",
-                "version": "13.2.2",
-                "spec": {
+                  },
                   "options": {
                     "legend": {
                       "calcs": [],
@@ -464,22 +411,55 @@ data:
                       "mode": "single",
                       "sort": "none"
                     }
-                  },
+                  }
+                },
+                "version": "13.2.2"
+              }
+            }
+          },
+          "panel-4": {
+            "kind": "Panel",
+            "spec": {
+              "data": {
+                "kind": "QueryGroup",
+                "spec": {
+                  "queries": [
+                    {
+                      "kind": "PanelQuery",
+                      "spec": {
+                        "hidden": false,
+                        "query": {
+                          "datasource": {
+                            "name": "prometheus"
+                          },
+                          "group": "prometheus",
+                          "kind": "DataQuery",
+                          "spec": {
+                            "editorMode": "code",
+                            "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"default\", pod=~\"$pod\", container!=\"\"}[5m])) by (pod)",
+                            "legendFormat": "{{pod}}",
+                            "range": true
+                          },
+                          "version": "v0"
+                        },
+                        "refId": "A"
+                      }
+                    }
+                  ],
+                  "queryOptions": {},
+                  "transformations": []
+                }
+              },
+              "description": "",
+              "id": 4,
+              "links": [],
+              "title": "CPU Usage per Pod",
+              "vizConfig": {
+                "group": "timeseries",
+                "kind": "VizConfig",
+                "spec": {
                   "fieldConfig": {
                     "defaults": {
-                      "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                          {
-                            "value": 0,
-                            "color": "green"
-                          },
-                          {
-                            "value": 80,
-                            "color": "red"
-                          }
-                        ]
-                      },
                       "color": {
                         "mode": "palette-classic"
                       },
@@ -519,11 +499,38 @@ data:
                         "thresholdsStyle": {
                           "mode": "off"
                         }
+                      },
+                      "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                          {
+                            "color": "green",
+                            "value": 0
+                          },
+                          {
+                            "color": "red",
+                            "value": 80
+                          }
+                        ]
                       }
                     },
                     "overrides": []
+                  },
+                  "options": {
+                    "legend": {
+                      "calcs": [],
+                      "displayMode": "list",
+                      "placement": "bottom",
+                      "showLegend": true
+                    },
+                    "tooltip": {
+                      "hideZeros": false,
+                      "mode": "single",
+                      "sort": "none"
+                    }
                   }
-                }
+                },
+                "version": "13.2.2"
               }
             }
           }
@@ -535,53 +542,53 @@ data:
               {
                 "kind": "GridLayoutItem",
                 "spec": {
-                  "x": 0,
-                  "y": 0,
-                  "width": 12,
-                  "height": 8,
                   "element": {
                     "kind": "ElementReference",
                     "name": "panel-1"
-                  }
+                  },
+                  "height": 8,
+                  "width": 12,
+                  "x": 0,
+                  "y": 0
                 }
               },
               {
                 "kind": "GridLayoutItem",
                 "spec": {
-                  "x": 12,
-                  "y": 0,
-                  "width": 12,
-                  "height": 8,
                   "element": {
                     "kind": "ElementReference",
                     "name": "panel-2"
-                  }
+                  },
+                  "height": 8,
+                  "width": 12,
+                  "x": 12,
+                  "y": 0
                 }
               },
               {
                 "kind": "GridLayoutItem",
                 "spec": {
-                  "x": 0,
-                  "y": 8,
-                  "width": 12,
-                  "height": 9,
                   "element": {
                     "kind": "ElementReference",
                     "name": "panel-3"
-                  }
+                  },
+                  "height": 9,
+                  "width": 12,
+                  "x": 0,
+                  "y": 8
                 }
               },
               {
                 "kind": "GridLayoutItem",
                 "spec": {
-                  "x": 12,
-                  "y": 8,
-                  "width": 12,
-                  "height": 9,
                   "element": {
                     "kind": "ElementReference",
                     "name": "panel-4"
-                  }
+                  },
+                  "height": 9,
+                  "width": 12,
+                  "x": 12,
+                  "y": 8
                 }
               }
             ]
@@ -589,12 +596,17 @@ data:
         },
         "links": [],
         "liveNow": false,
+        "preferences": {
+          "layout": {
+            "kind": "GridLayout",
+            "spec": {
+              "items": []
+            }
+          }
+        },
         "preload": false,
         "tags": [],
         "timeSettings": {
-          "timezone": "utc",
-          "from": "now-30m",
-          "to": "now",
           "autoRefresh": "10s",
           "autoRefreshIntervals": [
             "5s",
@@ -608,24 +620,83 @@ data:
             "2h",
             "1d"
           ],
+          "fiscalYearStartMonth": 0,
+          "from": "now-30m",
           "hideTimepicker": false,
-          "fiscalYearStartMonth": 0
+          "timezone": "utc",
+          "to": "now"
         },
         "title": "Capstone Backend Health",
-        "variables": [],
-        "preferences": {
-          "layout": {
-            "kind": "GridLayout",
+        "variables": [
+          {
+            "kind": "QueryVariable",
             "spec": {
-              "items": []
+              "allowCustomValue": true,
+              "current": {
+                "text": "",
+                "value": ""
+              },
+              "hide": "dontHide",
+              "includeAll": false,
+              "multi": false,
+              "name": "query0",
+              "options": [],
+              "query": {
+                "datasource": {
+                  "name": "prometheus"
+                },
+                "group": "prometheus",
+                "kind": "DataQuery",
+                "spec": {},
+                "version": "v0"
+              },
+              "refresh": "onDashboardLoad",
+              "regex": "",
+              "regexApplyTo": "value",
+              "skipUrlSync": false,
+              "sort": "disabled"
+            }
+          },
+          {
+            "kind": "QueryVariable",
+            "spec": {
+              "allowCustomValue": true,
+              "current": {
+                "text": "capstone-backend-backend-674b9bf5d5-nnwtt",
+                "value": "capstone-backend-backend-674b9bf5d5-nnwtt"
+              },
+              "definition": "label_values(kube_pod_info{namespace=\"default\", pod=~\"capstone-backend-.*\"},pod)",
+              "hide": "dontHide",
+              "includeAll": false,
+              "label": "Select Pod",
+              "multi": false,
+              "name": "pod",
+              "options": [],
+              "query": {
+                "datasource": {
+                  "name": "prometheus"
+                },
+                "group": "prometheus",
+                "kind": "DataQuery",
+                "spec": {
+                  "qryType": 1,
+                  "query": "label_values(kube_pod_info{namespace=\"default\", pod=~\"capstone-backend-.*\"},pod)",
+                  "refId": "PrometheusVariableQueryEditor-VariableQuery"
+                },
+                "version": "v0"
+              },
+              "refresh": "onDashboardLoad",
+              "regex": "",
+              "regexApplyTo": "value",
+              "skipUrlSync": false,
+              "sort": "disabled"
             }
           }
-        }
+        ]
       }
     }
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
   name: capstone-backend-dashboard
   namespace: monitoring
   labels:
