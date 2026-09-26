@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: 337405469571.dkr.ecr.ap-southeast-2.amazonaws.com/devops-capstone-app
-  tag: "4e599668b936a16b902c10c4155b750a2798e286"
+  tag: "d0974624cb778bfe5a1186b47634b01500b64b8a"
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
