@@ -189,7 +189,7 @@ data:
                           "spec": {
                             "editorMode": "code",
                             "expr": "histogram_quantile(0.95, sum by(le) (rate(flask_http_request_duration_seconds_bucket{namespace=\"default\"}[5m])))",
-                            "legendFormat": "{{p95 latency}}",
+                            "legendFormat": "{{ "{{" }}p95 latency{{ "}}" }}",
                             "range": true
                           },
                           "version": "v0"
@@ -304,7 +304,7 @@ data:
                           "spec": {
                             "editorMode": "code",
                             "expr": "container_memory_working_set_bytes{namespace=\"default\", pod=~\"$pod\", container!=\"\"}",
-                            "legendFormat": "{{pod}} - Usage",
+                            "legendFormat": "{{ "{{" }}pod{{ "}}" }} - Usage",
                             "range": true
                           },
                           "version": "v0"
@@ -326,7 +326,7 @@ data:
                             "editorMode": "code",
                             "expr": "kube_pod_container_resource_limits{namespace=\"default\", pod=~\"$pod\", resource=\"memory\"}",
                             "instant": false,
-                            "legendFormat": "{{pod}} - Limit",
+                            "legendFormat": "{{ "{{" }}pod{{ "}}" }} - Limit",
                             "range": true
                           },
                           "version": "v0"
@@ -441,7 +441,7 @@ data:
                           "spec": {
                             "editorMode": "code",
                             "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"default\", pod=~\"$pod\", container!=\"\"}[5m])) by (pod)",
-                            "legendFormat": "{{pod}}",
+                            "legendFormat": "{{ "{{" }}pod{{ "}}" }}",
                             "range": true
                           },
                           "version": "v0"
