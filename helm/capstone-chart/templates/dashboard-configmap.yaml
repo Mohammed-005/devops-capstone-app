@@ -1,28 +1,32 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: capstone-backend-health-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
 data:
-  capstone-backend-health.json: |
+  capstone-backend-health.json: |-
     {
       "apiVersion": "dashboard.grafana.app/v2",
       "kind": "Dashboard",
       "metadata": {
         "name": "ad6m5gc",
         "namespace": "default",
-        "uid": "d04bd45e-7ea2-4370-a6c6-dced64735f47",
-        "resourceVersion": "1790391941237980",
-        "generation": 2,
-        "creationTimestamp": "2026-09-26T02:37:26Z",
+        "uid": "9027853e-97ea-4b11-82aa-6bee8f89d93b",
+        "resourceVersion": "1790414982467982",
+        "generation": 1,
+        "creationTimestamp": "2026-09-26T09:29:42Z",
         "labels": {
-          "grafana.app/deprecatedInternalID": "493174879940608"
+          "grafana.app/deprecatedInternalID": "598006955515904"
         },
         "annotations": {
-          "grafana.app/createdBy": "user:efzdi1lx6zuo0d",
+          "grafana.app/createdBy": "access-policy:service",
           "grafana.app/managedBy": "classic-file-provisioning",
           "grafana.app/managerId": "sidecarProvider",
-          "grafana.app/sourceChecksum": "5720c799f3b11a287af66cf816bb23fc",
+          "grafana.app/sourceChecksum": "c1ad28e396fe8bb0fbcfed361902b1ed",
           "grafana.app/sourcePath": "/tmp/dashboards/capstone-backend-health.json",
-          "grafana.app/sourceTimestamp": "1790391941000",
-          "grafana.app/updatedBy": "access-policy:service",
-          "grafana.app/updatedTimestamp": "2026-09-26T03:05:41Z",
+          "grafana.app/sourceTimestamp": "1790414976000",
           "grafana.app/folder": ""
         }
       },
@@ -257,27 +261,27 @@ data:
                             "value": 80
                           }
                         ]
-                      },
-                      "unit": "s"
+                      }
                     },
-                    "overrides": []
+                    "unit": "s"
                   },
-                  "options": {
-                    "legend": {
-                      "calcs": [],
-                      "displayMode": "list",
-                      "placement": "bottom",
-                      "showLegend": true
-                    },
-                    "tooltip": {
-                      "hideZeros": false,
-                      "mode": "single",
-                      "sort": "none"
-                    }
-                  }
+                  "overrides": []
                 },
-                "version": "13.2.2"
-              }
+                "options": {
+                  "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                  },
+                  "tooltip": {
+                    "hideZeros": false,
+                    "mode": "single",
+                    "sort": "none"
+                  }
+                }
+              },
+              "version": "13.2.2"
             }
           },
           "panel-3": {
@@ -394,27 +398,27 @@ data:
                             "value": 80
                           }
                         ]
-                      },
-                      "unit": "bytes"
+                      }
                     },
-                    "overrides": []
+                    "unit": "bytes"
                   },
-                  "options": {
-                    "legend": {
-                      "calcs": [],
-                      "displayMode": "list",
-                      "placement": "bottom",
-                      "showLegend": true
-                    },
-                    "tooltip": {
-                      "hideZeros": false,
-                      "mode": "single",
-                      "sort": "none"
-                    }
-                  }
+                  "overrides": []
                 },
-                "version": "13.2.2"
-              }
+                "options": {
+                  "legend": {
+                    "calcs": [],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                  },
+                  "tooltip": {
+                    "hideZeros": false,
+                    "mode": "single",
+                    "sort": "none"
+                  }
+                }
+              },
+              "version": "13.2.2"
             }
           },
           "panel-4": {
@@ -533,6 +537,70 @@ data:
                 "version": "13.2.2"
               }
             }
+          },
+          "panel-5": {
+            "kind": "Panel",
+            "spec": {
+              "data": {
+                "kind": "QueryGroup",
+                "spec": {
+                  "queries": [
+                    {
+                      "kind": "PanelQuery",
+                      "spec": {
+                        "hidden": false,
+                        "query": {
+                          "datasource": {
+                            "name": "afzennmtq3ym8b"
+                          },
+                          "group": "loki",
+                          "kind": "DataQuery",
+                          "spec": {
+                            "direction": "backward",
+                            "editorMode": "code",
+                            "expr": "{namespace=\"default\", pod=\"$pod\"}",
+                            "queryType": "range"
+                          },
+                          "version": "v0"
+                        },
+                        "refId": "A"
+                      }
+                    }
+                  ],
+                  "queryOptions": {},
+                  "transformations": []
+                }
+              },
+              "description": "",
+              "id": 5,
+              "links": [],
+              "title": "New panel",
+              "vizConfig": {
+                "group": "logs",
+                "kind": "VizConfig",
+                "spec": {
+                  "fieldConfig": {
+                    "defaults": {},
+                    "overrides": []
+                  },
+                  "options": {
+                    "dedupStrategy": "none",
+                    "enableInfiniteScrolling": false,
+                    "enableLogDetails": true,
+                    "prettifyLogMessage": true,
+                    "showControls": false,
+                    "showFieldSelector": false,
+                    "showLevel": true,
+                    "showTime": false,
+                    "sortOrder": "Descending",
+                    "timestampResolution": "ms",
+                    "unwrappedColumns": false,
+                    "wrapLogMessage": false
+                  }
+                },
+                "version": "13.2.2"
+              }
+            }
           }
         },
         "layout": {
@@ -589,6 +657,19 @@ data:
                   "width": 12,
                   "x": 12,
                   "y": 8
+                }
+              },
+              {
+                "kind": "GridLayoutItem",
+                "spec": {
+                  "element": {
+                    "kind": "ElementReference",
+                    "name": "panel-5"
+                  },
+                  "height": 8,
+                  "width": 12,
+                  "x": 0,
+                  "y": 17
                 }
               }
             ]
@@ -695,9 +776,3 @@ data:
         ]
       }
     }
-kind: ConfigMap
-metadata:
-  name: capstone-backend-dashboard
-  namespace: monitoring
-  labels:
-    grafana_dashboard: "1"
