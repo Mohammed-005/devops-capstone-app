@@ -75,7 +75,7 @@ data:
                           "spec": {
                             "editorMode": "code",
                             "expr": "rate(kube_pod_container_status_restarts_total{namespace=\"default\", pod=~\"capstone-backend-.*\"}[15m])",
-                            "legendFormat": "{{pod}}",
+                            "legendFormat": "{{ "{{" }}pod{{ "}}" }}",
                             "range": true
                           },
                           "version": "v0"
