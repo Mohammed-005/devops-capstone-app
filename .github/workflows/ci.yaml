@@ -28,13 +28,13 @@ jobs:
                 vuln-type: 'os,library'
                 severity: 'CRITICAL,HIGH'
 
-        -   name: Debug OIDC Claims
+        -   name: Debug GitHub Context
             run: |
-                TOKEN=$(curl -sSf \
-                -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-                "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r '.value')
+                echo "Repository: $GITHUB_REPOSITORY"
+                echo "Ref: $GITHUB_REF"
+                echo "Repository ID: $GITHUB_REPOSITORY_ID"
+                echo "Owner ID: $GITHUB_REPOSITORY_OWNER_ID"
 
-                echo "$TOKEN" | cut -d '.' -f2 | base64 -d 2>/dev/null | jq '{sub, aud}'
         
         -   name: Configure AWS Credentials
             uses: aws-actions/configure-aws-credentials@v4
