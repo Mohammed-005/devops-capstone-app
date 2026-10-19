@@ -53,15 +53,22 @@ spec:
             image: alpine/k8s:1.32.13
             env:
             - name: AWS_ACCESS_KEY_ID
-              value: 
+              valueFrom: 
+                secretKeyRef:
+                  name: aws-ecr-creds
+                  key: AWS_ACCESS_KEY_ID
             - name: AWS_SECRET_ACCESS_KEY
-              value:
+              valueFrom:
+                secretKeyRef:
+                  name: aws-ecr-creds
+                  key: AWS_SECRET_ACCESS_KEY
             - name: AWS_REGION
               value: "ap-southeast-2"
             command:
             - /bin/sh
             - "-c"
             - | 
+              set -e
               echo "Fetching new ECR Token"
               TOKEN=$(aws ecr get-login-password --region $AWS_REGION)
               kubectl create secret docker-registry aws-ecr-secret \
