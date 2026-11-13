@@ -4,22 +4,20 @@
   "metadata": {
     "name": "ad6m5gc",
     "namespace": "default",
-    "uid": "d04bd45e-7ea2-4370-a6c6-dced64735f47",
-    "resourceVersion": "1790391941237980",
-    "generation": 2,
-    "creationTimestamp": "2026-09-26T02:37:26Z",
+    "uid": "7fc7b7e7-2eec-4a3b-ad64-e430e8051c2f",
+    "resourceVersion": "1794577570595982",
+    "generation": 1,
+    "creationTimestamp": "2026-11-13T13:46:10Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "493174879940608"
+      "grafana.app/deprecatedInternalID": "42768622784512"
     },
     "annotations": {
-      "grafana.app/createdBy": "user:efzdi1lx6zuo0d",
+      "grafana.app/createdBy": "access-policy:service",
       "grafana.app/managedBy": "classic-file-provisioning",
       "grafana.app/managerId": "sidecarProvider",
-      "grafana.app/sourceChecksum": "5720c799f3b11a287af66cf816bb23fc",
+      "grafana.app/sourceChecksum": "f5550877ebbf4d8c29282f00e5fd8d21",
       "grafana.app/sourcePath": "/tmp/dashboards/capstone-backend-health.json",
-      "grafana.app/sourceTimestamp": "1790391941000",
-      "grafana.app/updatedBy": "access-policy:service",
-      "grafana.app/updatedTimestamp": "2026-09-26T03:05:41Z",
+      "grafana.app/sourceTimestamp": "1794577570000",
       "grafana.app/folder": ""
     }
   },
@@ -158,7 +156,7 @@
                 }
               }
             },
-            "version": "13.2.2"
+            "version": "13.2.3"
           }
         }
       },
@@ -254,8 +252,7 @@
                         "value": 80
                       }
                     ]
-                  },
-                  "unit": "s"
+                  }
                 },
                 "overrides": []
               },
@@ -273,7 +270,7 @@
                 }
               }
             },
-            "version": "13.2.2"
+            "version": "13.2.3"
           }
         }
       },
@@ -391,8 +388,7 @@
                         "value": 80
                       }
                     ]
-                  },
-                  "unit": "bytes"
+                  }
                 },
                 "overrides": []
               },
@@ -410,7 +406,7 @@
                 }
               }
             },
-            "version": "13.2.2"
+            "version": "13.2.3"
           }
         }
       },
@@ -527,7 +523,71 @@
                 }
               }
             },
-            "version": "13.2.2"
+            "version": "13.2.3"
+          }
+        }
+      },
+      "panel-5": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "datasource": {
+                        "name": "P8E80F9AEF21F6940"
+                      },
+                      "group": "loki",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "direction": "backward",
+                        "editorMode": "code",
+                        "expr": "{namespace=\"default\", pod=\"$pod\"}",
+                        "queryType": "range"
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {},
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 5,
+          "links": [],
+          "title": "New panel",
+          "vizConfig": {
+            "group": "logs",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {},
+                "overrides": []
+              },
+              "options": {
+                "dedupStrategy": "none",
+                "enableInfiniteScrolling": false,
+                "enableLogDetails": true,
+                "prettifyLogMessage": true,
+                "showControls": false,
+                "showFieldSelector": false,
+                "showLevel": true,
+                "showTime": false,
+                "sortOrder": "Descending",
+                "timestampResolution": "ms",
+                "unwrappedColumns": false,
+                "wrapLogMessage": false
+              }
+            },
+            "version": "13.2.3"
           }
         }
       }
@@ -586,6 +646,19 @@
               "width": 12,
               "x": 12,
               "y": 8
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-5"
+              },
+              "height": 8,
+              "width": 12,
+              "x": 0,
+              "y": 17
             }
           }
         ]
