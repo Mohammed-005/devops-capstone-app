@@ -540,8 +540,7 @@
                     "hidden": false,
                     "query": {
                       "datasource": {
-                        "type": "loki",
-                        "uid": "P8E80F9AEF21F6940"
+                        "name": "P8E80F9AEF21F6940"
                       },
                       "group": "loki",
                       "kind": "DataQuery",
